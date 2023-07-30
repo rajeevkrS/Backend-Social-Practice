@@ -3,6 +3,10 @@ const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts'); //(npm install express-ejs-layouts)
 
+//use static file 
+app.use(express.static('./assets'));
+
+
 //use express layout
 app.use(expressLayouts);
 
