@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 //get the "user_controller.js"
-const usersContoller = require('../controllers/users_controller');
+const usersController = require('../controllers/users_controller');
 
 //accessing the "contoller's function" in routes folder using "router.get()"
-router.get('/', usersContoller.profile);
+router.get('/profile', usersController.profile);
 
+router.get('/sign-up', usersController.signUp); //Sign Up
+router.get('/sign-in', usersController.signIn); //Sign In
 
 module.exports = router;
 

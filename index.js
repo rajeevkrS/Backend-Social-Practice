@@ -1,8 +1,16 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts'); //(npm install express-ejs-layouts)
 const db = require('./config/mongoose');
+
+//middleware
+app.use(express.urlencoded());
+
+//setting up the "cookie-parser"
+app.use(cookieParser());
+
 
 //use static file 
 app.use(express.static('./assets'));
@@ -51,7 +59,8 @@ app.listen(port, function(err){
 //Finaly setup our database, where we have a "config folder" were I setup a file called "mongoose.js". It has access to mongoose library and i connected to database "mongoose.connect('mongodb://127.0.0.1/codeial_development');" and exported it and finally I access it in main "index.js" file "const db = require('./config/mongoose');"
 
 
-
+//Cookies: 
+//For reading and writing into cookies, we will be using library or package called "Cookie Parser"
 
 
 
