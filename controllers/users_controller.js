@@ -52,9 +52,9 @@ module.exports.create = async function(req, res){
 }
 
 //get the "Sign In" Data
-// module.exports.create = function(req, res){
+module.exports.createSession = function(req, res){
     
-// }
+}
 
 
 
