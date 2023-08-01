@@ -9,8 +9,12 @@ router.get('/profile', usersController.profile);
 
 router.get('/sign-up', usersController.signUp); //Sign Up
 router.get('/sign-in', usersController.signIn); //Sign In
+router.get('/sign-out', usersController.signOut); //Sign Out
 
 router.post('/create', usersController.create);
+router.post('/create-session', usersController.createSession);
+router.get('/end-session', usersController.endSession);
+
 
 
 
