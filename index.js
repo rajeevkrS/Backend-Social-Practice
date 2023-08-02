@@ -5,8 +5,15 @@ const port = 8000;
 const expressLayouts = require('express-ejs-layouts'); //(npm install express-ejs-layouts)
 const db = require('./config/mongoose');
 
+//used for session cookie and authentication.
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+
+
 //middleware
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
+
 
 //setting up the "cookie-parser"
 app.use(cookieParser());
@@ -23,13 +30,36 @@ app.use(expressLayouts);
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 
-//use express router
-app.use('/', require('./routes'));
-
 
 //setup the view engine .ejs
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+
+//setup the express session
+app.use(session({
+    //properties:
+    name: 'codeial',
+    //TODO later-change the secret before deployment in production mode
+    secret: "something",
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        maxAge: (1000 * 60 * 100) //specifies these no. in a milliseconds
+    }
+}));
+
+//telling app to use passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//setup the current user
+app.use(passport.setAuthenticatedUser);
+
+
+
+//use express router
+app.use('/', require('./routes'));
 
 
 app.listen(port, function(err){
@@ -64,6 +94,17 @@ app.listen(port, function(err){
 
 
 
+//Passport Summary:
 
+//We setup up passport authentication, the user is now getting an identity established on the server and that identity is saved into the session cookie using express-session and then it is being communicated to and from the browser to the server.
+
+
+// we have created a local strategy from passport - for authentication we are using this part in "passport-local-strategy.js" ( // authentication: telling passport to use the local-strategy ). Whenever I am passing a "(new LocalStrategy)" it is using that strategy for authentication when email and password are automatically passed in considering " usernameField: "email" " usernameField to be the email field.
+    // when we found the user we are returning the user in a "serializer formate" which is encrypted using my "express-session" ( "app.use(session())" ).
+    // and "passport.deserializeUser" it used to find the which user is there.
+
+//saveUninitialized : when their is a request which not initialized which means the user has not logged in(identity is not established) in that case i have setted it with "false" because i dont want to store extra data in the session cookie.
+
+//resave: when the identity is established or some sort of data present in the session data(user's info.), if that is being stored in that case i have setted it with "false" because i do not want to save it again and again.
 
 
