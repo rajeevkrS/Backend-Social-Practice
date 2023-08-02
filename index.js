@@ -10,6 +10,9 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
+// "MongoStore" requires an "session"- "express-session" because we need to store session info. to the database.
+const MongoStore = require('connect-mongo');
+
 
 //middleware
 app.use(express.urlencoded({extended: true}));
@@ -36,18 +39,28 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 
+
 //setup the express session
 app.use(session({
-    //properties:
+    // Properties:
     name: 'codeial',
-    //TODO later-change the secret before deployment in production mode
+    // TODO later - change the secret before deployment in production mode
     secret: "something",
     saveUninitialized: false,
     resave: false,
     cookie: {
-        maxAge: (1000 * 60 * 100) //specifies these no. in a milliseconds
-    }
+        maxAge: (1000 * 60 * 100) // Specifies the time in milliseconds
+    },
+    // "MongoStore" is used to store the session cookie in the db
+    store: MongoStore.create(
+        {
+            mongoUrl: 'mongodb://127.0.0.1:27017/codeial_development',
+            autoRemove: 'disabled'
+        }
+    )
 }));
+
+
 
 //telling app to use passport
 app.use(passport.initialize());
