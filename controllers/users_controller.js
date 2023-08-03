@@ -68,5 +68,20 @@ module.exports.createSession = function(req, res){
 
 
 
+//another action: "Sign out"
+module.exports.distroySession = function(req, res){
+    req.logout(function(err) {
+        if (err) {
+            // Handle error, maybe by logging it
+            console.error(err);
+        }
+        return res.redirect('/');
+    });
+}
+
+
+
+
+
 //Now this controller is ready to access by a router, and now that route needs to be access by browser...browser tells me that you need to go to this route and the controller/action returns whatever data it has. If the controller/action is not present then it throws an error.
 

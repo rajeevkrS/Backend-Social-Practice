@@ -10,7 +10,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 
-// "MongoStore" requires an "session"- "express-session" because we need to store session info. to the database.
+// "connect-mongo library" required to store session info. to the database.
 const MongoStore = require('connect-mongo');
 
 
@@ -56,6 +56,9 @@ app.use(session({
         {
             mongoUrl: 'mongodb://127.0.0.1:27017/codeial_development',
             autoRemove: 'disabled'
+        },
+        function(err){
+            console.log(err || 'connect-mongodb setup ok');
         }
     )
 }));
@@ -119,5 +122,9 @@ app.listen(port, function(err){
 //saveUninitialized : when their is a request which not initialized which means the user has not logged in(identity is not established) in that case i have setted it with "false" because i dont want to store extra data in the session cookie.
 
 //resave: when the identity is established or some sort of data present in the session data(user's info.), if that is being stored in that case i have setted it with "false" because i do not want to save it again and again.
+
+
+//
+
 
 

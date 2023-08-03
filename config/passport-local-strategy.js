@@ -95,3 +95,20 @@ module.exports = passport;
 //So what is happing till now :
 // "passport" is using the "local-strategy" to find the user who signed in and the using "serializeUser()" to set that user into the cookie means the "Id" of the user.
     // On the otherside, the cookie sent to the browser, when the browser makes the request the browser sends back the user.id..so we need "deserializer" to find the user again.
+
+
+//After "serializer & deserializer" their is a "checkAuthentication" with the function(req, res, next) then it checks if the user is authenticated, it will return to the next() function that is goint to be called otherwise take it to the "sign-in" page, if it is then this middleware passed on to the "routes".
+
+//then their is "setAuthenticatedUser" : we need to access the authenticated user in the views for that we again checked if the request is authenticated..if it is.. we set the res.locals.user = req.user and irrespective of anything else we pass on the contoller to the next() function.
+
+//Now catching "setAuthenticatedUser" function and referencing it in the main "index.js" file. 
+  //So in index.js file, we just putting as a middleware { app.use(passport.setAuthenticatedUser); } so whenever "passport.initialize() & passport.session()" is used then AuthenticatedUser is also been set 
+
+//How session is being indent?
+  //Their is "express-session library" , "passport library" and "passport-local (being called over in index.js)" with these library, we just used "app.use(session({}))" with some properties:- 'name, screte, saveUninitailized, resave, and cookie(with maxAge).
+  //Then we require "MongoStore Library" to store the session cookie in the db even when the server starts it remains in the databse so that "signed-in users" dont get "signed-out" in case the server restart(that info. doesnt get lost).
+
+//Then we did some changes in routes "users.js file"
+  //First we "create-session": user was "signing-in" using "passport.authenticate" were "local authenticate" is been used and 
+    //In case of failer, user will redirected back to sign-in page.
+    //In case of success, createSession action will be called
