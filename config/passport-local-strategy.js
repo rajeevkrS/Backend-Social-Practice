@@ -102,7 +102,7 @@ module.exports = passport;
 //then their is "setAuthenticatedUser" : we need to access the authenticated user in the views for that we again checked if the request is authenticated..if it is.. we set the res.locals.user = req.user and irrespective of anything else we pass on the contoller to the next() function.
 
 //Now catching "setAuthenticatedUser" function and referencing it in the main "index.js" file. 
-  //So in index.js file, we just putting as a middleware { app.use(passport.setAuthenticatedUser); } so whenever "passport.initialize() & passport.session()" is used then AuthenticatedUser is also been set 
+  //So in index.js file, we just putting as a middleware { app.use(passport.setAuthenticatedUser); } so whenever "passport.initialize() & passport.session()" is used then AuthenticatedUser is also been set.
 
 //How session is being indent?
   //Their is "express-session library" , "passport library" and "passport-local (being called over in index.js)" with these library, we just used "app.use(session({}))" with some properties:- 'name, screte, saveUninitailized, resave, and cookie(with maxAge).
@@ -111,4 +111,13 @@ module.exports = passport;
 //Then we did some changes in routes "users.js file"
   //First we "create-session": user was "signing-in" using "passport.authenticate" were "local authenticate" is been used and 
     //In case of failer, user will redirected back to sign-in page.
-    //In case of success, createSession action will be called
+    //In case of success, createSession action will be called and user will be redirected to home page
+
+//Next Step: We wanted profile page to accessible only when the user is signed in.
+  //we just put a check of "passport.checkAuthentication" on it. 
+  //"checkAuthentication": it checks if the user is authenticated or not, 
+    //if it is the then passes the controll to the next() function.
+    //if not, then redirected to sign-in page. 
+
+
+//Now all of these things done, at last we create a header so that our website is usable, when ever the user is signed-in - signed-out, different set of things are displayed with "if else statement" in "_headers.ejs file"
