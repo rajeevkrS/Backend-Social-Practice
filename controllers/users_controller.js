@@ -69,7 +69,7 @@ module.exports.createSession = function(req, res){
 
 
 //another action: "Sign out"
-module.exports.distroySession = function(req, res){
+module.exports.destroySession = function(req, res){
     req.logout(function(err) {
         if (err) {
             // Handle error, maybe by logging it
