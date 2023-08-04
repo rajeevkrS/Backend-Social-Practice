@@ -15,7 +15,7 @@ const MongoStore = require('connect-mongo');
 
 
 //middleware
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 
 //setting up the "cookie-parser"

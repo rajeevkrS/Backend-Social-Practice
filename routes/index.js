@@ -11,6 +11,8 @@ console.log('router loaded');
 //accessing the "contoller's function" in routes folder using "router.get()"
 router.get('/', homeController.home);
 router.use('/users', require('./users'));
+//postController
+router.use('/posts', require('./posts'));
 
 //for any further routes, access from here by let say " router.use('/story', require('./story')); ".
 
