@@ -28,3 +28,5 @@ module.exports = router;
 //" router.use('/users', require('./users')) " whenever the requests is for users, you can just require my neighbour which is "./users".
 
 //So any request which comes to "/" without anything appended to it will be forwarded to "homeController".
+
+

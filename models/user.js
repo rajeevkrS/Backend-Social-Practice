@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
 
 
 //Telling "mongoose" this is a model which has an argument "user.js" as 'user' and it will refer to "userSchema"
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 
 module.exports = User;

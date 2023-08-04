@@ -2,9 +2,9 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    //feilds:
+    // fields for post data:
     content: {
-        type: 'String',
+        type: String,
         required: true //for saving the data
     },
     //linking to the user: whatever post is going to be created through "postSchema", is going to be link to a user.
