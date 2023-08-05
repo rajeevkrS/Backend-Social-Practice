@@ -20,3 +20,9 @@ module.exports.home = async function (req, res) {
 
     //Note:
 //So whenever this action getting called which is the home page, it will find all the posts and putting them into the context and sending to the view "home.ejs"
+
+
+  //Posts Steps:
+// Step 1: displayed the posts
+// Step 2: populate the users
+// Step 3: displayed those users on the home page.
