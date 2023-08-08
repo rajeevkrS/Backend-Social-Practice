@@ -1,6 +1,5 @@
 const Post = require('../models/post');
 
-
 //I need to export a function which is publically to my routes file and that should return something.
 module.exports.home = async function (req, res) {
     try {
@@ -34,5 +33,4 @@ module.exports.home = async function (req, res) {
 // Step 1: displayed the posts
 // Step 2: populate the users
 // Step 3: displayed those users on the home page.
-
-//So another Step: Showing comments just along side posts and auther of the comment also.
+//Step 4: Showing comments just along side posts and author's name of the comment also.

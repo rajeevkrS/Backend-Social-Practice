@@ -22,3 +22,8 @@ a{
 li{
     margin-right: 15px;
 }
+
+.delete-button a{
+    color: blue;
+    text-decoration: underline blue;
+}

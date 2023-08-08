@@ -1,6 +1,7 @@
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 
-//exporting a first action
+//Create Action
 module.exports.create = async function (req, res) {
     try {
       const post = await Post.create({
@@ -16,6 +17,37 @@ module.exports.create = async function (req, res) {
       return;
     }
   }
+
+
+// Delete Action
+module.exports.destroy = async function(req, res){
+  try{
+    const post = await Post.findByIdAndDelete(req.params.id);
+
+        //if got the post
+    // Authorization: No user is allowed to delete the post that has been written by another user.
+    // So we need to check whether the user is deleting the post is the user who written the post.
+    // ".id" means converting the object id into string
+    if(post.user == req.user.id){
+      //deleteing the comments
+      await Comment.deleteMany({post: req.params.id});
+      return res.redirect('back');
+    }
+    else{
+      return res.redirect('back');
+    }
+  }
+  catch (err) {
+    console.log('Error in deleting a post', err);
+    return res.redirect('back');
+  }
+}
+
+
+
+
+
+
 
 
 //First we created a "post_controller" and created a form which has an action to get the data from the "form (textarea)" that is present on the browser.
