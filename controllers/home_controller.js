@@ -4,7 +4,15 @@ const Post = require('../models/post');
 //I need to export a function which is publically to my routes file and that should return something.
 module.exports.home = async function (req, res) {
     try {
-      const posts = await Post.find({}).populate('user');
+      //populating the mutiple models
+      const posts = await Post.find({})
+                              .populate('user')
+                              .populate({
+                                path: 'comments',
+                                populate: {
+                                  path: 'user'
+                                }
+                              });
     
       return res.render('home', {
         title: "Codeial | Home",
@@ -26,3 +34,5 @@ module.exports.home = async function (req, res) {
 // Step 1: displayed the posts
 // Step 2: populate the users
 // Step 3: displayed those users on the home page.
+
+//So another Step: Showing comments just along side posts and auther of the comment also.
