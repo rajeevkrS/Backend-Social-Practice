@@ -105,6 +105,15 @@ app.listen(port, function(err){
 //Finaly setup our database, where we have a "config folder" were I setup a file called "mongoose.js". It has access to mongoose library and i connected to database "mongoose.connect('mongodb://127.0.0.1/codeial_development');" and exported it and finally I access it in main "index.js" file "const db = require('./config/mongoose');"
 
 
+// layout.ejs
+
+//  My Controller is saying I want to render "user_profile.ejs" since my express layouts is being used by "app" it finds the layout which should be a wrapper covering my "user_profile.ejs", So my wrapper is renedered and this "layout.ejs" is rendered together with it the "user_profile.ejs" and it is sent to the browser. 
+
+//  So combining "user_profile" and my "layout" filling the user profile in the place of body ( <%- body %> ) and it is send back to the browser 
+
+
+
+
 //Cookies: 
 //For reading and writing into cookies, we will be using library or package called "Cookie Parser"
 

@@ -18,6 +18,26 @@ module.exports.profile = async function(req, res){
     }
 }
 
+//User's Update Form action
+module.exports.update = async function(req, res){
+    try {
+        //checking if current user is logged in then only allowing to edit its details
+        if(req.user.id == req.params.id){
+            const user = await User.findByIdAndUpdate(req.params.id, req.body);
+
+            return res.redirect('back');
+        }
+        else{
+            return res.status(401).send('Unauthorized');
+        }
+    } 
+    catch(err){
+        console.log('error', err);
+        return;
+    }
+}
+
+
 //"Sign Up Page" action
 module.exports.signUp = function(req, res){
 

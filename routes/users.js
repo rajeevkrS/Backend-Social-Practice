@@ -9,6 +9,9 @@ const usersController = require('../controllers/users_controller');
 //if the user is signed in 
 router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
 
+//for updation of users detail
+router.post('/update/:id', passport.checkAuthentication, usersController.update);
+
 router.get('/sign-up', usersController.signUp); //Sign Up
 router.get('/sign-in', usersController.signIn); //Sign In
 

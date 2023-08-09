@@ -9,28 +9,17 @@ header{
     padding-left: 1rem;
 }
 
-a{
+header #user-info{
+    display: flex;   
+}
+
+#user-info a{
     color: white;
     text-decoration: none;
 }
 
-#user-info{
+#user-info li{
     list-style: none;
-    display: flex;
-    
-}
-
-li{
     margin-right: 15px;
 }
 
-.delete-button a{
-    color: blue;
-    text-decoration: underline blue;
-}
-
-.username{
-    padding: 2px;
-    background-color: orange;
-    border-radius: 3px;
-}
