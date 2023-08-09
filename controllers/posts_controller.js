@@ -25,11 +25,11 @@ module.exports.destroy = async function(req, res){
     const post = await Post.findByIdAndDelete(req.params.id);
 
         //if got the post
-    // Authorization: No user is allowed to delete the post that has been written by another user.
+    // Authorization comes in picture: No user is allowed to delete the post that has been written by another user.
     // So we need to check whether the user is deleting the post is the user who written the post.
     // ".id" means converting the object id into string
     if(post.user == req.user.id){
-      //deleteing the comments
+      //deleteing the comments when post gets deleted
       await Comment.deleteMany({post: req.params.id});
       return res.redirect('back');
     }

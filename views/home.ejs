@@ -33,7 +33,7 @@
                         <% } %>
 
                         <%= post.content %>
-                        <small>
+                        <small class="username">
                             <%= post.user.name %>
                         </small>
                     </p>
@@ -61,9 +61,16 @@
                                     <% for(comment of post.comments){ %>
                                      
                                         <p>
+
+                                            <% if(locals.user && locals.user.id == comment.user.id){ %>
+                                                <small class="delete-button">
+                                                    <a href="/comments/destroy/<%= comment.id %>">X</a>
+                                                </small>
+                                            <% } %>
+
                                             <%= comment.content %>
                                             <br>
-                                            <small>
+                                            <small class="username">
                                                 <%= comment.user.name %>
                                             </small>
                                         </p>
