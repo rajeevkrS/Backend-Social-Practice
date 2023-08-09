@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 
 //I need to export a function which is publically to my routes file and that should return something.
 module.exports.home = async function (req, res) {
@@ -13,9 +14,11 @@ module.exports.home = async function (req, res) {
                                 }
                               });
     
+      const users = await User.find({});
       return res.render('home', {
         title: "Codeial | Home",
-        posts: posts
+        posts: posts,
+        all_users: users
       });
     } 
     catch (err) {

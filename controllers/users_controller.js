@@ -3,14 +3,22 @@
 const User = require('../models/user');
 
 
-//exporting a first action
-module.exports.profile = function(req, res){
-    return res.render('user_profile', {
-        title: "User Profile"
-    });
+//User's action
+module.exports.profile = async function(req, res){
+    try {
+        const user = await User.findById(req.params.id);
+        return res.render('user_profile', {
+            title: "User Profile",
+            profile_user: user
+        });
+    }
+    catch(err){
+        console.log('error', err);
+        return;
+    }
 }
 
-//second action: "Sign Up Page"
+//"Sign Up Page" action
 module.exports.signUp = function(req, res){
 
     if(req.isAuthenticated()){
@@ -22,7 +30,7 @@ module.exports.signUp = function(req, res){
     });
 }
 
-//third action: "Sign In Page"
+//"Sign In Page" action
 module.exports.signIn = function(req, res){
 
     if(req.isAuthenticated()){

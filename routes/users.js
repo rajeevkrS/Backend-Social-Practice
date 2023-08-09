@@ -7,7 +7,7 @@ const usersController = require('../controllers/users_controller');
 
 // accessing the "contoller's function" in routes folder using "router.get()"
 //if the user is signed in 
-router.get('/profile', passport.checkAuthentication, usersController.profile);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profile);
 
 router.get('/sign-up', usersController.signUp); //Sign Up
 router.get('/sign-in', usersController.signIn); //Sign In
