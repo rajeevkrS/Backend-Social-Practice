@@ -13,6 +13,12 @@ const passportLocal = require('./config/passport-local-strategy');
 // "connect-mongo library" required to store session info. to the database.
 const MongoStore = require('connect-mongo');
 
+// "connect-flash"
+const flash = require('connect-flash');
+
+// Middleware
+const customMware = require('./config/middleware');
+
 
 //middleware
 app.use(express.urlencoded({extended: true}));
@@ -72,7 +78,12 @@ app.use(passport.session());
 //setup the current user
 app.use(passport.setAuthenticatedUser);
 
+// telling app to use connect-flash
+// so we need to put it after the session is being used because "flash" uses "session cookie".
+app.use(flash());
 
+// telling app to use middleware with setFlash
+app.use(customMware.setFlash);
 
 //use express router
 app.use('/', require('./routes'));
@@ -133,7 +144,31 @@ app.listen(port, function(err){
 //resave: when the identity is established or some sort of data present in the session data(user's info.), if that is being stored in that case i have setted it with "false" because i do not want to save it again and again.
 
 
-//
 
+
+
+//Delete and Update Summary:
+
+// First Deleting Posts and the associated comments with it: We found the post and comments with it using post controller action.
+// Second we delete comments which was little tricky because we had to delete the comment and find the entry of comment in the array in the associated post and remove it from there, So we use "$pull".
+
+// After that we just distributed our home page code into mutiple partials like "_post & _comment ejs" 
+
+// Next, we created user profile pages to be edited (Update) if the same user is logged in user is allowed to edit its details and if another user is logged in, they can only view the profile.
+
+// After that we just give some basic styling to out home page.
+
+
+
+
+// Connect-Flash:
+
+// we intalled the library(npm install connect-flash) and set it up to use after the session has pe used by an app then set app to use flash.
+// Then we setup some flash messages in users controller, putting some messages in the req. "req.flash()" .
+// And then pass on these req.flash messages and put them into their res. "res.redirect" to the ejs templates, we created a middleware.js which fetches everthing from "req.flash()" and put them into locals.
+// And using the middleware just after the flash to use setFlash middleware from "middleware.js".
+// And finally displayed those messages from "layout.ejs" by giving a checks
+
+//Setted up "Noty Js cdn" to layout.ejs file to show the animated flash message
 
 

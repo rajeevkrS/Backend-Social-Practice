@@ -36,4 +36,4 @@ module.exports.home = async function (req, res) {
 // Step 1: displayed the posts
 // Step 2: populate the users
 // Step 3: displayed those users on the home page.
-//Step 4: Showing comments just along side posts and author's name of the comment also.
+// Step 4: Showing comments just along side posts and author's name of the comment also.
