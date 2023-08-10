@@ -8,20 +8,44 @@
         newPostForm.submit(function(e){
             e.preventDefault();
 
-            //manually submiting using ajax
+            //manually submitting using ajax
             $.ajax({
                 type: 'post',
                 url: '/posts/create',
                 //sending the data for creating the post using "serialize()" : this converts the form data into "json"
                 data: newPostForm.serialize(),
                 success: function(data){
+
+                    // console.log(data);
+
                     //calls the newPostDom function
                     let newPost = newPostDom(data.data.post);
+
                     //appending the list to "post-list-container"(home.ejs)
                     $('#post-list-container>ul').prepend(newPost); //prepend() putting at the first position
+
+                    //"newPost" object has this class inside it now
+                    deletePost($(' .delete-post-button', newPost));
+
+                    // Display a success flash notification
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Post created successfully!',
+                        timeout: 3000 // Duration for which the notification will be displayed
+                    }).show();
+                    
                 },
                  error: function(error){
                     console.log(error.responseText);
+
+                    // Display an error flash notification
+                    new Noty({
+                        type: 'error',
+                        layout: 'topRight',
+                        text: 'An error occurred. Please try again.',
+                        timeout: 3000
+                    }).show();
                 }
             });
         });
@@ -35,7 +59,7 @@
         <li id="post-${post._id}">
             <p>
                 <small class="delete-button">
-                    <a href="/posts/destroy/${post.id}" class="delete-post-button">X</a>
+                    <a href="/posts/destroy/${post._id}" class="delete-post-button">X</a>
                 </small>
 
                 ${post.content}
@@ -71,5 +95,54 @@
 
 
 
+
+    //Method to delete the post from DOM: this is the function which sending the ajax request
+    let deletePost = function(deleteLink){
+        $(deleteLink).click(function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'get',
+                //get delete-button(X) link "href" via prop() 
+                url: $(deleteLink).prop('href'),
+                success: function(data){
+                    $(`#post-${data.data.post_id}`).remove();
+
+                    // Display a success flash notification
+                    new Noty({
+                        type: 'success',
+                        layout: 'topRight',
+                        text: 'Post Deleted successfully!',
+                        timeout: 3000 // Duration for which the notification will be displayed
+                    }).show();
+
+                },
+                error: function(error){
+                    console.log(error.responseText);
+
+                    // Display an error flash notification
+                    new Noty({
+                        type: 'error',
+                        layout: 'topRight',
+                        text: 'An error occurred. Please try again.',
+                        timeout: 3000
+                    }).show();
+
+                }
+            });
+        });
+    }
+
+
+
+
+
     createPost();
 }
+
+// Delete:
+
+// Created a function which sends post id to be deleted
+    //blocks the natural behaviour of delete link and sends via ajax parallelly.
+    // when it sends it, it recieves some data with "post_id"
+// After that populated this deleteLink { deletePost($(' .delete-post-button', newPost)); }

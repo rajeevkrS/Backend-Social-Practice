@@ -4,21 +4,25 @@ const Comment = require('../models/comment');
 // Create Action
 module.exports.create = async function (req, res) {
     try {
-      const post = await Post.create({
+      var post = await Post.create({
         //fields:
         content: req.body.content,
         user: req.user._id, // the user will be identified by "_id" from the database
       });
 
+      post = await Post.findById(post.id);
+
       //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
-      if(req.xhr){
+      if (req.xhr) {
+        const populatedPost = await post.populate('user', 'name');
+
         return res.status(200).json({
-          data: {
-            post: post
-          },
-          message: "Post Created!"
-        })
-      }
+            data: {
+                post: populatedPost
+            },
+            message: "Post Created!"
+        });
+    }
   
       req.flash('success', 'Post Published!');
       return res.redirect('back');
@@ -42,6 +46,16 @@ module.exports.destroy = async function(req, res){
     if(post.user == req.user.id){
       //deleteing the comments when post gets deleted
       await Comment.deleteMany({post: req.params.id});
+
+      //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
+      if(req.xhr){
+        return res.status(200).json({
+          data: {
+            post_id: req.params.id
+          },
+          message: "Post Deleted!"
+        })
+      }
 
       req.flash('success', 'Post and associated comments deleted!');
 
