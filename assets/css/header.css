@@ -9,6 +9,10 @@ header{
     padding-left: 1rem;
 }
 
+header>a{
+    color: white;   
+}
+
 header #user-info{
     display: flex;   
 }
