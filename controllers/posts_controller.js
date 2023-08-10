@@ -4,13 +4,11 @@ const Comment = require('../models/comment');
 // Create Action
 module.exports.create = async function (req, res) {
     try {
-      var post = await Post.create({
+      let post = await Post.create({
         //fields:
         content: req.body.content,
         user: req.user._id, // the user will be identified by "_id" from the database
       });
-
-      post = await Post.findById(post.id);
 
       //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
       if (req.xhr) {

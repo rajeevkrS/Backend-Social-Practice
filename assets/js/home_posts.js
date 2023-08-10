@@ -29,6 +29,7 @@
 
                     // Display a success flash notification
                     new Noty({
+                        theme: 'relax',
                         type: 'success',
                         layout: 'topRight',
                         text: 'Post created successfully!',
@@ -41,6 +42,7 @@
 
                     // Display an error flash notification
                     new Noty({
+                        theme: 'relax',
                         type: 'error',
                         layout: 'topRight',
                         text: 'An error occurred. Please try again.',
@@ -110,6 +112,7 @@
 
                     // Display a success flash notification
                     new Noty({
+                        theme: 'relax',
                         type: 'success',
                         layout: 'topRight',
                         text: 'Post Deleted successfully!',
@@ -122,6 +125,7 @@
 
                     // Display an error flash notification
                     new Noty({
+                        theme: 'relax',
                         type: 'error',
                         layout: 'topRight',
                         text: 'An error occurred. Please try again.',
