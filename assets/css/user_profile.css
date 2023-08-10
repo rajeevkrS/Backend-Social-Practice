@@ -1,3 +1,7 @@
 body{
     background-color: aqua;
 }
+
+.user-profile-details{
+    padding-left: 10px;
+}

@@ -19,11 +19,13 @@ module.exports.create = async function(req, res){
             post.comments.push(comment);
             await post.save(); //save() tells the database this is the final version so block it and save this push.
 
+            req.flash('success', 'Comment Published!');
+
             res.redirect('/');
         }
     }
     catch (err) {
-        console.log('Error in creating a comment', err);
+        req.flash('error', err);
         return res.redirect('/');
     }
 }
@@ -46,6 +48,8 @@ module.exports.destroy = async function(req, res){
             let postId = comment.post;
 
             await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            req.flash('success', 'Comment Deleted Successfully!');
             
             return res.redirect('back');
         }
@@ -54,7 +58,7 @@ module.exports.destroy = async function(req, res){
         }
     } 
     catch (err) {
-        console.log('Error in deleting a comment', err);
+        req.flash('error', err);
         return res.redirect('back');
     }
 }

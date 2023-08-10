@@ -11,14 +11,15 @@ const User = require('../models/user');
 // authentication: telling passport to use the local-strategy
 passport.use(new LocalStrategy({
   usernameField: "email",
+  passReqToCallback: 'true' //pulling out the flash message and puts it into the locals. This basically allow use to set the first argument as "req."
 },
-async function (email, password, done) {
+async function (req, email, password, done) {
   try {
     // Find the user and establish the identity using async/await
     const user = await User.findOne({ email: email });
 
     if (!user || user.password !== password) {
-      console.log('Invalid Username/Password');
+      req.flash('error', 'Invalid Username/Password');
       return done(null, false);
     }
 
@@ -26,7 +27,7 @@ async function (email, password, done) {
     return done(null, user);
   } 
   catch (err) {
-    console.log('Error in finding the user--> Passport');
+    req.flash('error', err);
     return done(err);
   }
 }

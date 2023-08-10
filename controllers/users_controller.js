@@ -25,6 +25,8 @@ module.exports.update = async function(req, res){
         if(req.user.id == req.params.id){
             const user = await User.findByIdAndUpdate(req.params.id, req.body);
 
+            req.flash('success', 'Updated Successfully!');
+
             return res.redirect('back');
         }
         else{
@@ -32,8 +34,8 @@ module.exports.update = async function(req, res){
         }
     } 
     catch(err){
-        console.log('error', err);
-        return;
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 
