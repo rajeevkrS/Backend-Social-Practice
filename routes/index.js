@@ -16,7 +16,8 @@ router.use('/posts', require('./posts'));
 //commentsController
 router.use('/comments', require('./comments'));
 
-//for any further routes, access from here by let say " router.use('/story', require('./story')); ".
+// for any further routes, access from here
+// router.use('/routerName', require('./routerfile));
 
 module.exports = router;
 

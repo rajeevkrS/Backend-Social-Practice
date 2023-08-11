@@ -1,15 +1,15 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 
-//Creating Comment Action
+//Create Comment Action
 module.exports.create = async function(req, res){
     try{
         //finding the post first
-        const post = await Post.findById(req.body.post);
+        let post = await Post.findById(req.body.post);
 
         //if we found the post then we create the comment
         if(post){
-            const comment = await Comment.create({
+            let comment = await Comment.create({
                 content: req.body.content,
                 post: req.body.post,
                 user: req.user._id
@@ -19,8 +19,19 @@ module.exports.create = async function(req, res){
             post.comments.push(comment);
             await post.save(); //save() tells the database this is the final version so block it and save this push.
 
-            req.flash('success', 'Comment Published!');
+            //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
+            if (req.xhr) {
+                comment = await comment.populate('user', 'name');
 
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Comment Created!"
+                });
+            }
+
+            req.flash('success', 'Comment Published!');
             res.redirect('/');
         }
     }
@@ -32,11 +43,11 @@ module.exports.create = async function(req, res){
 
 
 
-//Deleting Comment Action
+//Delete Comment Action
 module.exports.destroy = async function(req, res){
     try {
         //finding the comment to be deleted
-        const comment = await Comment.findByIdAndDelete(req.params.id);
+        let comment = await Comment.findByIdAndDelete(req.params.id);
 
             //if got the comment:
         // Authorization comes in picture: No user is allowed to delete the comment that has been written by another user.
@@ -49,8 +60,17 @@ module.exports.destroy = async function(req, res){
 
             await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
 
+            //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
+            if(req.xhr){
+                return res.status(200).json({
+                data: {
+                    comment_id: req.params.id
+                },
+                message: "Comment Deleted!"
+                })
+            }
+
             req.flash('success', 'Comment Deleted Successfully!');
-            
             return res.redirect('back');
         }
         else{

@@ -1,7 +1,7 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 
-// Create Action
+// Create Post Action
 module.exports.create = async function (req, res) {
     try {
       let post = await Post.create({
@@ -12,7 +12,7 @@ module.exports.create = async function (req, res) {
 
       //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
       if (req.xhr) {
-        const populatedPost = await post.populate('user', 'name');
+        let populatedPost = await post.populate('user', 'name');
 
         return res.status(200).json({
             data: {
@@ -32,10 +32,10 @@ module.exports.create = async function (req, res) {
   }
 
 
-// Delete Action
+// Delete Post Action
 module.exports.destroy = async function(req, res){
   try{
-    const post = await Post.findByIdAndDelete(req.params.id);
+    let post = await Post.findByIdAndDelete(req.params.id);
 
         //if got the post
     // Authorization comes in picture: No user is allowed to delete the post that has been written by another user.
