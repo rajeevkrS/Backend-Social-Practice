@@ -142,9 +142,19 @@
     convertPostsToAjax();
 }
 
+
+
+// Summary:
+
+// We created inside assest's js file, which sent the form via AJAX, using "peventDefault()" prevented the default behaviour of the form to get submitted and then we sent the data to the server via AJAX parallelly(asynchronous).
+// And on the server side we use "req.xhr" and we checked whether an req. was XMLHttp req. or not which is an AJAX req., if it was we sent back data into "json form".
+// And once we sent back data into json form, so we created a function which display that data. Then 👇
+
 // Delete:
 
+// We create another function which sends the delete req. by AJAX and then the req. give a successfull response, we  deleted that elememt from the DOM.
+
 // Created a function which sends post id to be deleted
-    //blocks the natural behaviour of delete link and sends via ajax parallelly.
+    // using "peventDefault()" blocks the natural behaviour of delete link and sends via ajax parallelly.
     // when it sends it, it recieves some data with "post_id"
 // After that populated this deleteLink { deletePost($(' .delete-post-button', newPost)); }

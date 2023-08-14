@@ -2,6 +2,12 @@
 
 const mongoose = require('mongoose');
 
+//multer for file uploads
+const multer  = require('multer');
+//Multer needs Path: we will be setting the path where the file will be stored
+const path = require('path');
+const AVATAR_PATH = path.join('/uploads/users/avatars');
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
