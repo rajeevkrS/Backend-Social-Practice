@@ -20,22 +20,42 @@ module.exports.profile = async function(req, res){
 
 //User's Update Form action
 module.exports.update = async function(req, res){
-    try {
-        //checking if current user is logged in then only allowing to edit its details
-        if(req.user.id == req.params.id){
-            const user = await User.findByIdAndUpdate(req.params.id, req.body);
 
-            req.flash('success', 'Updated Successfully!');
+    // checking if current user is logged in then only allowing to edit its details
+    if(req.user.id == req.params.id){
+        try {
+            
+            // First i will find the user
+            let user = await User.findById(req.params.id);
 
+            // if user is found, I need to update the user
+            // we will be using multer and "uploadedAvatar" function will be used.
+            User.uploadedAvatar(req, res, function(err){
+                if(err){
+                    console.log('********Multer Error', err);
+                }
+
+                //storing the file along side the user
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                //if req. has a file
+                if(req.file){
+                    // this is saving the path of the uploaded file into the avatar field in the current user.
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                // console.log(req.file);
+                
+                // saving the user
+                user.save();
+                req.flash('success', 'Updated Successfully!');
+                return res.redirect('back');
+            });
+        } 
+        catch (err) {
+            req.flash('error', err);
             return res.redirect('back');
         }
-        else{
-            return res.status(401).send('Unauthorized');
-        }
-    } 
-    catch(err){
-        req.flash('error', err);
-        return res.redirect('back');
     }
 }
 
