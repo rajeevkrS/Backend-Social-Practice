@@ -3,6 +3,7 @@
 const User = require('../models/user');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
 
 //User's action
@@ -32,8 +33,14 @@ module.exports.update = async function(req, res){
 
             // if user is found, I need to update the user
             // we will be using multer and "uploadedAvatar" function will be used.
-            User.uploadedAvatar(req, res, function(err){
-                if(err){
+            User.uploadedAvatar(req, res, async function(err){
+                if (err) {
+                    if (err instanceof multer.MulterError) {
+                        if (err.code === 'LIMIT_FILE_SIZE') {
+                            req.flash('error', 'Avatar file size should be within 2MB.');
+                            return res.redirect('back');
+                        }
+                    }
                     console.log('********Multer Error', err);
                 }
 
@@ -44,8 +51,8 @@ module.exports.update = async function(req, res){
                 //if req. has a file
                 if(req.file){
 
-                     // Delete old avatar if it exists
-                     if (user.avatar) {
+                    // Delete old avatar if it exists
+                    if (user.avatar) {
                         const avatarFilePath = path.join(__dirname, '..', user.avatar);
                         
                         // Check if the old avatar file exists before deleting

@@ -53,7 +53,12 @@ let storage = multer.diskStorage({
 // "multer({storage: storage})": it attached the diskStorage on multer in the storage property with my storage variable.
 // "single('avatar')": this says only one avatar/file will be uploaded for the fieldname "avatar".
 // For accessing this "uploadedAvatar" function by the model name "User" and ".uploadedAvatar" (User.uploadedAvatar).
-userSchema.statics.uploadedAvatar = multer({storage: storage}).single('avatar');
+userSchema.statics.uploadedAvatar = multer({
+                                        storage: storage,
+                                        limits: {
+                                            fileSize: 2 * 1024 * 1024 //2MB(adjust the size limit as needed)
+                                        },
+                                    }).single('avatar');
 
 // Just need this "AVATAR_PATH" to be available publically for the user model. Whenever I want to access from the controller where is this going to be saved, It just needs to be able to tell me tha path.
 userSchema.statics.avatarPath = AVATAR_PATH;
