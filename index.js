@@ -31,6 +31,10 @@ app.use(cookieParser());
 //use static file 
 app.use(express.static('./assets'));
 
+//Making the uploads path available to the browser.
+// directory of index joins with uploads folder.
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 
 //use express layout
 app.use(expressLayouts);

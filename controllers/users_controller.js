@@ -1,6 +1,8 @@
 //This is one controller which can controlls many users.
 
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 
 
 //User's action
@@ -41,11 +43,28 @@ module.exports.update = async function(req, res){
 
                 //if req. has a file
                 if(req.file){
+
+                     // Delete old avatar if it exists
+                     if (user.avatar) {
+                        const avatarFilePath = path.join(__dirname, '..', user.avatar);
+                        
+                        // Check if the old avatar file exists before deleting
+                        if (fs.existsSync(avatarFilePath)) {
+                            try {
+                                fs.unlinkSync(avatarFilePath);
+                                console.log('Old avatar deleted successfully.');
+                            } 
+                            catch (deleteErr) {
+                                console.error('Error deleting old avatar:', deleteErr);
+                            }
+                        }
+                    }
+
                     // this is saving the path of the uploaded file into the avatar field in the current user.
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }
                 // console.log(req.file);
-                
+
                 // saving the user
                 user.save();
                 req.flash('success', 'Updated Successfully!');

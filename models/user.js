@@ -78,6 +78,17 @@ module.exports = User;
 // "AVATAR_PATH" has a path which will join .
 
 
+// Multer for file uploads:
+
+// first we installed multer "npm install multer" and required it and decleared a path where it will be stored the uploaded file.
+// Then we decleared a field with name "avatar" which will be storing the path of the file because the database does not store the file, it just stores the path of the file for that we are putting this field "avatar".
+// Next we defiend some storage properties for multer to on the disk locally with "destination" and "filename" and file name was appended with current timestamp "Date.now()".
+// Next we declared "uploadedAvatar" as the multer which used the variable storage.
+// Next we went to "users controller", their inside user's update function, we finded the user and calling "uploadedAvatar" static function.. passing the req. to it so that we are able to read the req./data from the "multi part form" and then we set the user name, email and the file.
+// Next we saved the user and redirect to the same page.
+// Then we created the attribute to show the avatar file in the "user_profile.ejs".
+// Then for showing the avatar file we went to main "index.js" made to app to use the static file : { app.use('/uploads', express.static(__dirname + '/uploads')) }.
+
 
 
 
