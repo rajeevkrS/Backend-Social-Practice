@@ -55,7 +55,7 @@ module.exports.update = async function(req, res){
                     if (user.avatar) {
                         const avatarFilePath = path.join(__dirname, '..', user.avatar);
                         
-                        // Check if the old avatar file exists before deleting
+                        // Check if the old avatar file exists before deleting using "fs(file system)"
                         if (fs.existsSync(avatarFilePath)) {
                             try {
                                 fs.unlinkSync(avatarFilePath);
@@ -74,6 +74,7 @@ module.exports.update = async function(req, res){
 
                 // saving the user
                 user.save();
+                
                 req.flash('success', 'Updated Successfully!');
                 return res.redirect('back');
             });

@@ -16,6 +16,10 @@ router.use('/posts', require('./posts'));
 //commentsController
 router.use('/comments', require('./comments'));
 
+// telling router to use api
+router.use('/api', require('./api'));
+
+
 // for any further routes, access from here
 // router.use('/routerName', require('./routerfile));
 

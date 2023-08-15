@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
 
 
 // Now linking "multer", "AVATAR_PATH" and "userSchema's avatar field". Making sure whenever I am saving the file it get saved inside the this folder "/uploads/users/avatars" and the path is going over "userSchema's avatar field".
-    // The disk storage engine gives you full control on storing files to disk.
+    // The disk storage engine gives you full control on storing files to disk locally.
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         //"__dirname": gives me the current path which is a models
@@ -42,7 +42,7 @@ let storage = multer.diskStorage({
     // "filename": used to define what would be the name of the file.
     filename: function (req, file, cb) {
         // "file.fieldname": will be stored as avatar
-        // "uniqueSuffix": will have the value of Date.now()
+        // "Date.now()": will change its timestamps value at every uploads
         cb(null, file.fieldname + '-' + Date.now());
     }
 });
@@ -79,20 +79,20 @@ module.exports = User;
     // This whole will be converted into a path
 
 // "__dirname" is models/user.js .
-// ".." is going one step back which is uploads/users/avatars.
+// ".." is going one step back which is uploads folder.
 // "AVATAR_PATH" has a path which will join .
 
 
 // Multer for file uploads:
 
-// first we installed multer "npm install multer" and required it and decleared a path where it will be stored the uploaded file.
+// first we installed multer "npm install multer" and required it and decleared a path where it will be stores the uploaded file.
 // Then we decleared a field with name "avatar" which will be storing the path of the file because the database does not store the file, it just stores the path of the file for that we are putting this field "avatar".
-// Next we defiend some storage properties for multer to on the disk locally with "destination" and "filename" and file name was appended with current timestamp "Date.now()".
+// Next we defiend some storage properties for multer to on the disk locally with "destination" and "filename" and file name was appended with current timestamp "Date.now()" on every uploads.
 // Next we declared "uploadedAvatar" as the multer which used the variable storage.
-// Next we went to "users controller", their inside user's update function, we finded the user and calling "uploadedAvatar" static function.. passing the req. to it so that we are able to read the req./data from the "multi part form" and then we set the user name, email and the file.
+// Next we went to "users controller", their inside user's update function, we finded the user and calling "uploadedAvatar" static function.. passing the req. to it so that we are able to read the req./data from the "multipart form" and then we set the user name, email and the file.
 // Next we saved the user and redirect to the same page.
-// Then we created the attribute to show the avatar file in the "user_profile.ejs".
-// Then for showing the avatar file we went to main "index.js" made to app to use the static file : { app.use('/uploads', express.static(__dirname + '/uploads')) }.
+// Then we created the "img" attribute to show the avatar file in the "user_profile.ejs".
+// Then for showing the avatar file we went to main "index.js" made the app to use the static file : { app.use('/uploads', express.static(__dirname + '/uploads')) }.
 
 
 
