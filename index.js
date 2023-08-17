@@ -9,6 +9,8 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+// Passport JWT for API Authentications
+const PassportJWT = require('./config/passport-jwt-strategy');
 
 // "connect-mongo library" required to store session info. to the database.
 const MongoStore = require('connect-mongo');
