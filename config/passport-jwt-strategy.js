@@ -10,20 +10,17 @@ const User = require('../models/user');
 
 let opts = {
     // finding JWT from the header using "fromAuthHeaderAsBearerToken"
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken,
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     // decrypted using 'codeial'
     secretOrKey: 'codeial'
 }
 
 // telling passport to use JWTStrategy
-passport.use(new JWTStrategy(opts, function(jwtPayload, done){
+passport.use(new JWTStrategy(opts, async function(jwtPayload, done){
+    try {
 
-    // Finding the user based on the info. in Payload
-    User.findById(jwtPayload._id, function(err, user){
-        if(err){
-            console.log('Error in finding user from JWT');
-            return;
-        }
+        // Finding the user based on the info. in Payload
+        let user = await User.findById(jwtPayload._id);
         // If user found
         if(user){
             return done(null, user);
@@ -32,7 +29,14 @@ passport.use(new JWTStrategy(opts, function(jwtPayload, done){
         else{
             return done(null, false);
         }
-    });
+        
+    } 
+    catch (err) {
+        console.log('*****', err);
+        return res.json(500, {
+            message: "Internal Server Error"    
+        });
+    }
 }));
 
 module.exports = passport;

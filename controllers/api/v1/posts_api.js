@@ -42,18 +42,19 @@ module.exports.destroy = async function(req, res){
     // Authorization comes in picture: No user is allowed to delete the post that has been written by another user.
     // So we need to check whether the user is deleting the post is the user who written the post.
     // ".id" means converting the object id into string
-    // if(post.user == req.user.id){
+    if(post.user == req.user.id){
       //deleteing the comments when post gets deleted
       await Comment.deleteMany({post: req.params.id});
 
       return res.json(200, {
         message: "Post and Associated Comments Deleted Successfully!"
       });
-    // }
-    // else{
-    //   req.flash('error', 'You cannot delete this post!');
-    //   return res.redirect('back');
-    // }
+    }
+    else{
+      return res.json(401, {
+        message: "You cannot delete this post!"
+      });
+    }
   }
   catch (err) {
     console.log('*****', err);
