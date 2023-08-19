@@ -12,7 +12,7 @@ const User = require('../models/user');
 passport.use(new googleStrategy({
     // options:
     clientID: "145093345900-1qnhdvcfmpke2knvknoa5lr70jvcdnou.apps.googleusercontent.com",
-    clientSecret: "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",
+    clientSecret: "refer from codeial development project while sign in/up using google",
     callbackURL: "http://localhost:8000/users/auth/google/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
@@ -50,4 +50,7 @@ async function(accessToken, refreshToken, profile, done) {
 
 
 module.exports = passport;
+
+
+
 
