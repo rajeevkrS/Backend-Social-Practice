@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
 
-// transporter : it defines the config. using which I will be sending emails
+// transporter : it defines the config. using which I will be sending emails. This the path how this communication is going to take place.
 let transporter = nodemailer.createTransport({
     // properties:
     service: 'gmail',
@@ -10,11 +10,12 @@ let transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: asdsa,
-        pass: ssa
+        user: "ronaldocrcr5@gmail.com",
+        pass: "oqetilhpfacmgquf"
     }
 });
 
+// Whenever I am going to send html email were the file would be placed inside views/mailers folder
 // Definig that we will be using ejs which is "template rendering engine"
 // "relativePath": is where the mail is being sent
 let renderTemplate = (data, relativePath) => {
@@ -37,7 +38,7 @@ let renderTemplate = (data, relativePath) => {
     return mailHTML;
 }
 
-
+// And finally exporting these 2 properties
 module.exports = {
     transporter: transporter,
     renderTemplate: renderTemplate
