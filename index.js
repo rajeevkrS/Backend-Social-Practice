@@ -11,6 +11,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 // Passport JWT for API Authentications
 const PassportJWT = require('./config/passport-jwt-strategy');
+// Passport Google for Sign-In/Sign-Up
+const passportGoogle = require('./config/passport-google-oauth2-strategy');
 
 // "connect-mongo library" required to store session info. to the database.
 const MongoStore = require('connect-mongo');

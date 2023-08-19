@@ -27,10 +27,22 @@ router.post('/create-session', passport.authenticate(
     // if it is not done then it redirects to sign-in page
 
 
-
 //sign out
 router.get('/sign-out', usersController.destroySession);
 
+
+// Two routes here for google
+// 1. When I click on button for the google sign-in, It takes me to google and the data is fetched from their.
+// 2. When the google fetches that data from database and sends it back to me route which was my callback url.
+router.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']})); //scope is the info. which we are looking to fetch and its an array of strings
+
+// '/auth/google/callback' : this is the url at which i will recieve the data.
+// Then passed through authentication
+// Then it passes on controller to createSession action
+router.get('/auth/google/callback', passport.authenticate(
+    'google', 
+    {failureRedirect: '/users/sign-in'}
+    ), usersController.createSession);
 
 
 
