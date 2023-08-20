@@ -1,6 +1,8 @@
 const Comment = require('../models/comment');
 const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
+const commentEmailWorker = require('../workers/comment_email_worker');
+const queue = require('../config/kue');
 
 //Create Comment Action
 module.exports.create = async function(req, res){
@@ -24,7 +26,17 @@ module.exports.create = async function(req, res){
             // populating the user
             comment = await comment.populate('user', 'name email');
             
-            commentsMailer.newComment(comment);
+            // commentsMailer.newComment(comment);
+
+            // inside this queue i am creating new job
+            let job = queue.create('emails', comment).save(function(err){
+                if(err){
+                    console.log('error in sending to the queue', err);
+                    return;
+                }
+                // 
+                console.log('job enqueued', job.id);
+            });
 
             //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
             if (req.xhr) {
