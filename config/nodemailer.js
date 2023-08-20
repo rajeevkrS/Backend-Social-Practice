@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const ejs = require('ejs');
 const path = require('path');
 
-// transporter : it defines the config. using which I will be sending emails. This the path how this communication is going to take place.
+// transporter : it defines the config. using which I will be sending emails. This is the path how this communication is going to take place.
 let transporter = nodemailer.createTransport({
     // properties:
     service: 'gmail',
@@ -27,14 +27,15 @@ let renderTemplate = (data, relativePath) => {
         data,
         function(err, template){
             if(err){
-                console.log('error in rendering template');
+                console.log('error in rendering template', err);
                 return;
             }
 
+            // storing the template
             mailHTML = template;
         }
     )
-
+    // returning the template
     return mailHTML;
 }
 
