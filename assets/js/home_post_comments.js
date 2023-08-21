@@ -36,6 +36,9 @@ class PostComments{
                     $(`#post-comments-${postId}`).prepend(newComment);
                     pSelf.deleteComment($(' .delete-comment-button', newComment));
 
+                    // enable the functionality of the toggle like button on the new comment
+                    new ToggleLike($(' .toggle-like-button', newComment));
+
                     new Noty({
                         theme: 'relax',
                         text: "Comment Published!",
@@ -69,6 +72,14 @@ class PostComments{
                             <br>
                             <small class="username">
                                 ${comment.user.name}
+                            </small>
+
+                            <small>
+    
+                                <a href="/likes/toggle/?id=${comment._id}&type=Comment" class="toggle-like-button" data-likes="0">
+                                    0 Likes
+                                </a>
+                        
                             </small>
                         </p>    
 

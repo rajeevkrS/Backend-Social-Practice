@@ -4,7 +4,7 @@ const User = require('../models/user');
 //I need to export a function which is publically to my routes file and that should return something.
 module.exports.home = async function (req, res) {
     try {
-      //populating the mutiple models
+      //populating the Post and Comment models with the likes
       const posts = await Post.find({})
                               .sort('-createdAt')
                               .populate('user')
@@ -12,8 +12,13 @@ module.exports.home = async function (req, res) {
                                 path: 'comments',
                                 populate: {
                                   path: 'user'
+                                },
+                                populate: {
+                                  // this likes for Comments
+                                  path: 'likes'
                                 }
-                              });
+                              })
+                              .populate('likes');// this likes for Posts
     
       const users = await User.find({});
       return res.render('home', {

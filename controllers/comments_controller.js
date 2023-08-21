@@ -3,6 +3,7 @@ const Post = require('../models/post');
 const commentsMailer = require('../mailers/comments_mailer');
 const commentEmailWorker = require('../workers/comment_email_worker');
 const queue = require('../config/kue');
+const Like = require('../models/like');
 
 //Create Comment Action
 module.exports.create = async function(req, res){
@@ -28,7 +29,7 @@ module.exports.create = async function(req, res){
             
             // commentsMailer.newComment(comment);
 
-            // inside this queue i am creating new job
+            //Delayed Job: inside this queue I am creating new job
             let job = queue.create('emails', comment).save(function(err){
                 if(err){
                     console.log('error in sending to the queue', err);
@@ -72,6 +73,9 @@ module.exports.destroy = async function(req, res){
         // So we need to check whether the user is deleting the comment is the user who written the comment.
         // ".id" means converting the object id into string.
         if(comment.user == req.user.id){
+
+            // deleted the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
 
             //deleteing the comments and updating the post when comments gets deleted using "$pull:"
             let postId = comment.post;

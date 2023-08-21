@@ -15,6 +15,8 @@ router.use('/users', require('./users'));
 router.use('/posts', require('./posts'));
 //commentsController
 router.use('/comments', require('./comments'));
+// likesController
+router.use('/likes', require('./likes'));
 
 // telling router to use api
 router.use('/api', require('./api'));
