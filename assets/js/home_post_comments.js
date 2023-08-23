@@ -72,6 +72,7 @@ class PostComments{
                             <br>
                             <small class="username">
                                 ${comment.user.name}
+                                console.log(comment)
                             </small>
 
                             <small>

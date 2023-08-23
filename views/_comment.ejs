@@ -4,14 +4,13 @@
 
     <p>
 
-        <% if(locals.user && locals.user.id == comment.user.id){ %>
+        <% if(locals.user && locals.user.id == comment.user){ %>
             <small class="delete-button">
                 <a href="/comments/destroy/<%= comment.id %>" class="delete-comment-button">X</a>
             </small>
         <% } %>
 
         <%= comment.content %>
-        <br>
         <small class="username">
             <%= comment.user.name %>
         </small>
