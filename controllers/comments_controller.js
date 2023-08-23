@@ -21,11 +21,11 @@ module.exports.create = async function(req, res){
 
             //if the comments gets created then adding comments to a post
             post.comments.push(comment);
-            await post.save(); //save() tells the database this is the final version so block it and save this push.
+            post.save(); //save() tells the database this is the final version so block it and save this push.
 
             
             // populating the user
-            comment = await comment.populate('user', 'name email');
+            comment = await comment.populate('user', 'name email').execPopulate();
             
             // commentsMailer.newComment(comment);
 
@@ -74,13 +74,13 @@ module.exports.destroy = async function(req, res){
         // ".id" means converting the object id into string.
         if(comment.user == req.user.id){
 
-            // deleted the associated likes for this comment
-            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
-
             //deleteing the comments and updating the post when comments gets deleted using "$pull:"
             let postId = comment.post;
 
             await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+
+            // deleted the associated likes for this comment
+            await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
 
             //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
             if(req.xhr){
