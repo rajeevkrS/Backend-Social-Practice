@@ -20,6 +20,12 @@ module.exports.home = async function (req, res) {
                               })
                               .populate('likes');// this likes for Posts
     
+                              posts.forEach((post)=>{
+                                post.comments.forEach(async (comment)=>{
+                                    comment.user = await User.findById(comment.user)
+                                })
+                            })
+                              // console.log(posts);
       const users = await User.find({});
       return res.render('home', {
         title: "Codeial | Home",

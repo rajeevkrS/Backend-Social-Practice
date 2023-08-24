@@ -66,7 +66,12 @@
 
 <script src="/js/chat_engine.js"></script>
 
-
+<% if(locals.user){ %>
+    <script>
+        // for creating a connection
+        new ChatEngine('user-chat-box', '<%= locals.user._id %>')
+    </script> 
+<% } %>
 
 
 
