@@ -8,6 +8,8 @@ exports.newComment = (comment) => {
 
     let htmlString = nodemailer.renderTemplate({comment: comment}, '/comments/new_comments.ejs');
 
+    console.log(comment.user);
+
     // sending an email
     nodemailer.transporter.sendMail({
         from: 'ronaldocrcr5@gmail.com',

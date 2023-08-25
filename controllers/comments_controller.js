@@ -25,7 +25,7 @@ module.exports.create = async function(req, res){
 
             
             // populating the user
-            comment = await comment.populate('user', 'name email').execPopulate();
+            comment = await comment.populate(['user']);
             
             // commentsMailer.newComment(comment);
 

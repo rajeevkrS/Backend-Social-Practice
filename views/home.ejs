@@ -69,7 +69,7 @@
 <% if(locals.user){ %>
     <script>
         // for creating a connection
-        new ChatEngine('user-chat-box', '<%= locals.user._id %>')
+        new ChatEngine('user-chat-box', '<%= locals.user.email %>')
     </script> 
 <% } %>
 

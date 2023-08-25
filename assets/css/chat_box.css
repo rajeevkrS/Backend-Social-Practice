@@ -1,7 +1,7 @@
 #user-chat-box{
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0;
+    right: 0;
     border: 1px dashed grey;
     height: 350px;
     width: 300px;
@@ -15,7 +15,18 @@
     padding: 10px;
     height: 70%;
     background-color: white;
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* Custom styling for the scrollbar */
+#chat-messages-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-messages-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
 }
 
 .other-message{
@@ -59,6 +70,12 @@
     color: white;
     border: none;
     background: #58d258;
+    
+}
+
+#chat-message-input-container #send-message:hover{
+    background: #9d2626;
+    cursor: pointer;
 }
 
 

@@ -23,8 +23,8 @@ module.exports.home = async function (req, res) {
                               posts.forEach((post)=>{
                                 post.comments.forEach(async (comment)=>{
                                     comment.user = await User.findById(comment.user)
-                                })
-                            })
+                                });
+                              });
                               // console.log(posts);
       const users = await User.find({});
       return res.render('home', {

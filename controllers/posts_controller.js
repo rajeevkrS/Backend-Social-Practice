@@ -13,7 +13,7 @@ module.exports.create = async function (req, res) {
 
       //checking if the req. is AJAX req.(type of req. is XMLHttp req.:- xhr)
       if (req.xhr) {
-        post = await post.populate('user', 'name').execPopulate();
+        post = await post.populate(['user']);
 
         return res.status(200).json({
             data: {
